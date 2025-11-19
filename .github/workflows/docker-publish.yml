@@ -12,6 +12,12 @@ permissions:
   packages: write
   id-token: write
 
+env:
+  # canonical image path (owner/repo) forced to lowercase for Docker tag validity.
+  IMAGE_OWNER: ${{ toLower(github.repository_owner) }}
+  IMAGE_REPO: ${{ toLower(github.event.repository.name) }}
+  IMAGE: ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_REPO }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -40,12 +46,12 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:${{ toLower(github.ref_name) }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Image info
         run: |
-          echo "Image pushed: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest"
+          echo "Image pushed: ${{ env.IMAGE }}:latest"
