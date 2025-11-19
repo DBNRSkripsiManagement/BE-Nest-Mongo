@@ -30,6 +30,5 @@ export class Dosen {
 
 export const DosenSchema = SchemaFactory.createForClass(Dosen);
 
-// optional index
 DosenSchema.index({ nip: 'hashed' });
 DosenSchema.index({ Departemen: 1 });
