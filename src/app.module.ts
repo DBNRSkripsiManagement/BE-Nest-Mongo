@@ -6,6 +6,7 @@ import { ConnectOptions } from 'mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DosenModule } from './Dosen/Dosen.module';
+import { MahasiswaModule } from './Mahasiswa/Mahasiswa.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { DosenModule } from './Dosen/Dosen.module';
       inject: [ConfigService],
     }),
     DosenModule,
+    MahasiswaModule
   ],
   controllers: [AppController],
   providers: [AppService],

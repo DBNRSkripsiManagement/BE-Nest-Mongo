@@ -30,10 +30,6 @@ export class DosenController {
     return this.dosenService.findAll(filter, Number(page), Number(limit));
   }
 
-  /** -----------------------------
-   *  GET /dosen/:nip
-   *  (alias getDosen)
-   * -------------------------------- */
   @Get(':nip')
   findOne(@Param('nip') nip: string) {
     return this.dosenService.findByNip(nip);
@@ -44,10 +40,6 @@ export class DosenController {
     return this.dosenService.findByNip(nip);
   }
 
-  /** -----------------------------
-   *  POST /dosen
-   *  (alias createDosen)
-   * -------------------------------- */
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
   create(@Body() createDto: CreateDosenDto) {
@@ -60,10 +52,6 @@ export class DosenController {
     return this.dosenService.create(createDto);
   }
 
-  /** -----------------------------
-   *  GET /dosen/getBimbingan/:nip
-   *  Mengambil daftar mahasiswa bimbingan berdasarkan array id_Mahasiswa_Bimbingan
-   * -------------------------------- */
   @Get('getBimbingan/:nip')
   async getBimbingan(@Param('nip') nip: string) {
     return this.dosenService.getBimbingan(nip);

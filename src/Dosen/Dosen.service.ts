@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Dosen, DosenDocument } from './schemas/Dosen.schema';
 import { CreateDosenDto } from './dto/create-dosen.dto';
-import { Mahasiswa, MahasiswaDocument } from '../mahasiswa/schemas/Mahasiswa.schema';
+import { Mahasiswa, MahasiswaDocument } from '../Mahasiswa/schemas/mahasiswa.schema';
 
 @Injectable()
 export class DosenService {
