@@ -1,4 +1,4 @@
-// dosen/schemas/dosen.schema.ts
+// src/Dosen/schemas/dosen.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -12,23 +12,24 @@ export class Dosen {
   @Prop({ required: true })
   nama: string;
 
-  @Prop({ type: [String], required: true, validate: [(val: string[]) => val.length === 3, 'bidang_keahlian must have 3 items'] })
+  @Prop({ type: [String], required: true, default: [] })
   bidang_keahlian: string[];
 
-  @Prop({ required: true, type: Number, min: 0 })
+  @Prop({ type: Number, required: true, default: 0 })
   kuota_bimbingan: number;
 
-  @Prop({ required: true, type: Number, min: 0 })
+  @Prop({ type: Number, required: true, default: 0 })
   sedang_membimbing: number;
-
-  @Prop({ required: true, enum: ['Sistem Informasi', 'Teknik Informatika'] })
-  Departemen: string;
 
   @Prop({ type: [String], default: [] })
   id_Mahasiswa_Bimbingan: string[];
+
+  @Prop({ required: true, enum: ['Sistem Informasi', 'Teknik Informatika'] })
+  Departemen: string;
 }
 
 export const DosenSchema = SchemaFactory.createForClass(Dosen);
 
+// useful indexes
 DosenSchema.index({ nip: 'hashed' });
 DosenSchema.index({ Departemen: 1 });

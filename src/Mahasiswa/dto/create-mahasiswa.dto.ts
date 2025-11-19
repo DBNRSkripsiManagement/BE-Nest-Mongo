@@ -1,25 +1,37 @@
-import { IsString, IsArray, ArrayNotEmpty, IsOptional, IsIn, IsDefined, ValidateNested } from 'class-validator';
+// src/mahasiswa/dto/create-mahasiswa.dto.ts
+import { IsString, IsArray, IsOptional, IsIn, ArrayNotEmpty, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class TimelineItemDto {
-  @IsString() t: string;
-  @IsString() kegiatan: string;
-  @IsOptional() @IsString() catatan?: string;
+  @IsString()
+  t: string;
+
+  @IsString()
+  kegiatan: string;
+
+  @IsOptional()
+  @IsString()
+  catatan?: string;
 }
 
 export class CreateMahasiswaDto {
-  @IsString() _id: string; // s_2025xxxx
-  @IsString() nim: string;
-  @IsString() nama: string;
+  @IsString()
+  _id: string;
+
+  @IsString()
+  nim: string;
+
+  @IsString()
+  nama: string;
 
   @IsOptional()
   @IsString()
   judul_skripsi?: string;
 
-  @IsArray()
   @IsOptional()
+  @IsArray()
   @ArrayNotEmpty()
-  bidang_minat?: string[]; // optional but must be array if present
+  bidang_minat?: string[];
 
   @IsString()
   nip_pembimbing: string;
@@ -33,7 +45,6 @@ export class CreateMahasiswaDto {
   Departemen: string;
 
   @IsString()
-  // program_studi will be further validated in service/controller based on Departemen
   program_studi: string;
 
   @IsOptional()

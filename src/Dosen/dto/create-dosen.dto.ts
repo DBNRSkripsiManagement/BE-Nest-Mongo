@@ -8,5 +8,5 @@ export class CreateDosenDto {
   @IsInt() @Min(0) kuota_bimbingan: number;
   @IsInt() @Min(0) sedang_membimbing: number;
   @IsString() @IsIn(['Sistem Informasi','Teknik Informatika']) Departemen: string;
-  @IsArray() id_Mahasiswa_Bimbingan: string[];
+  @IsArray() id_Mahasiswa_Bimbingan?: string[];
 }

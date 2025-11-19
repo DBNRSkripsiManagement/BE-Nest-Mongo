@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+// src/Mahasiswa/Mahasiswa.controller.ts
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  Put,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { MahasiswaService } from './Mahasiswa.service';
 import { CreateMahasiswaDto } from './dto/create-mahasiswa.dto';
 import { UpdateMahasiswaDto } from './dto/update-mahasiswa.dto';
@@ -9,12 +21,13 @@ export class MahasiswaController {
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
-  create(@Body() createDto: CreateMahasiswaDto) {
-    return this.mahasiswaService.create(createDto);
+  async create(@Body() createDto: CreateMahasiswaDto) {
+    // call the public create method on the service (it will pick transaction or fallback)
+    return await this.mahasiswaService.create(createDto);
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query('departemen') departemen?: string,
     @Query('nip') nip?: string,
     @Query('page') page = '1',
@@ -23,27 +36,27 @@ export class MahasiswaController {
     const filter: any = {};
     if (departemen) filter.Departemen = departemen;
     if (nip) filter.nip_pembimbing = nip;
-    return this.mahasiswaService.findAll(filter, Number(page), Number(limit));
+    return await this.mahasiswaService.findAll(filter, Number(page), Number(limit));
+  }
+
+  @Get('nim/:nim')
+  async findByNim(@Param('nim') nim: string) {
+    return await this.mahasiswaService.findByNim(nim);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mahasiswaService.findById(id);
-  }
-
-  @Get('/nim/:nim')
-  findByNim(@Param('nim') nim: string) {
-    return this.mahasiswaService.findByNim(nim);
+  async findOne(@Param('id') id: string) {
+    return await this.mahasiswaService.findById(id);
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
-  update(@Param('id') id: string, @Body() updateDto: UpdateMahasiswaDto) {
-    return this.mahasiswaService.update(id, updateDto);
+  async update(@Param('id') id: string, @Body() updateDto: UpdateMahasiswaDto) {
+    return await this.mahasiswaService.update(id, updateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mahasiswaService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.mahasiswaService.remove(id);
   }
 }

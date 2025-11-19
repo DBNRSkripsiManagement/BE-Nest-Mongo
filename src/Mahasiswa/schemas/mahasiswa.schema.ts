@@ -1,3 +1,4 @@
+// src/mahasiswa/schemas/mahasiswa.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -14,14 +15,14 @@ export class Mahasiswa {
   @Prop({ required: true })
   nama: string;
 
-  @Prop()
+  @Prop({ required: false })
   judul_skripsi?: string;
 
   @Prop({ type: [String], default: [] })
   bidang_minat: string[];
 
   @Prop({ required: true })
-  nip_pembimbing: string; // refer to Dosen.nip
+  nip_pembimbing: string;
 
   @Prop({ required: true, enum: ['bimbingan', 'menunggu_pembimbing', 'selesai'] })
   status: string;
@@ -32,17 +33,22 @@ export class Mahasiswa {
   @Prop({ required: true })
   program_studi: string;
 
-  @Prop({ type: [{ 
-    t: String,
-    kegiatan: String,
-    catatan: { type: String, default: '' }
-  }], default: [] })
+  @Prop({
+    type: [
+      {
+        t: { type: String }, // keep string ISO, or change to Date if desired
+        kegiatan: { type: String },
+        catatan: { type: String, default: '' },
+      },
+    ],
+    default: [],
+  })
   timeline: { t: string; kegiatan: string; catatan?: string }[];
 }
 
 export const MahasiswaSchema = SchemaFactory.createForClass(Mahasiswa);
 
-// useful indexes
+// Indexes
 MahasiswaSchema.index({ nim: 'hashed' });
 MahasiswaSchema.index({ nip_pembimbing: 1 });
 MahasiswaSchema.index({ Departemen: 1, program_studi: 1 });
