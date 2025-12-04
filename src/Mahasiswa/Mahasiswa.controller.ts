@@ -58,5 +58,10 @@ export class MahasiswaController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.mahasiswaService.remove(id);
+  } 
+
+  @Delete()
+  async removeAll() {
+    return await this.mahasiswaService.removeAll();
   }
 }

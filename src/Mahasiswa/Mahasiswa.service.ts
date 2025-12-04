@@ -178,4 +178,9 @@ export class MahasiswaService {
     if (res.deletedCount === 0) throw new NotFoundException('Mahasiswa tidak ditemukan untuk dihapus');
     return { ok: true };
   }
+
+  async removeAll() {
+    const res = await this.mahasiswaModel.deleteMany({}).exec();
+    return { deletedCount: res.deletedCount };
+  }
 }
